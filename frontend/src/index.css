@@ -23,3 +23,105 @@ tbody td { padding:8px 6px; border-bottom:1px solid #f3f4f6; }
 .chart-wrap { margin: 18px 0; }
 .search-label { margin-right: 28px; white-space: nowrap; } 
 
+/* ===== Filter bar - horizontal layout ===== */
+.filter-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-right: 12px;
+}
+
+.filter-label {
+  font-size: 13px;
+  color: var(--muted, #6b7280);
+  white-space: nowrap;
+  min-width: 60px;
+  text-align: left;
+}
+
+.filter-input,
+.filter-select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  min-width: 160px;
+  background: #fff;
+  outline: none;
+  box-shadow: none;
+}
+
+.search-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-label {
+  margin-right: 12px;
+  white-space: nowrap;
+}
+
+.search-input {
+  min-width: 300px;
+}
+
+.container {
+  position: relative; 
+}
+
+.reset-button {
+  position: absolute;
+  top: 20px;          
+  right: 20px;         
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 8px;
+  border: 1px solid #e6e9ef;
+  background: #ffffff;
+  color: #374151;
+  font-weight: 600;
+  min-width: 130px;
+  box-shadow: none;
+  cursor: pointer;
+  z-index: 30;        
+}
+
+.reset-button:hover {
+  transform: translateY(-1px);
+  background: #fafafa;
+  box-shadow: 0 6px 12px rgba(15,23,42,0.04);
+}
+
+
+
+
+@media (max-width: 900px) {
+  .filter-bar { gap: 10px; }
+  .filter-group { flex-direction: column; align-items: stretch; margin-right: 0; }
+  .filter-label { min-width: 0; margin-bottom: 6px; }
+  .search-group { margin-left: 0; width: 100%; justify-content: flex-start; }
+  .search-input { min-width: 100%; }
+  .filter-input, .filter-select { min-width: 100%; }
+  .reset-button {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    margin-top: 8px;
+    align-self: stretch;
+  }
+}
+
+
+
