@@ -78,7 +78,7 @@ FROM public.campaign_metrics;
 SELECT date, campaign_id, COUNT(*) FROM public.campaign_metrics GROUP BY date, campaign_id HAVING COUNT(*) > 1;
 ```
 
-## Herausforderungen & Lösungen (kurz)
+## Herausforderungen & Lösungen
 
 - **Datum / Dezimalformate:** CSV aus Sheets exportiert; Validator akzeptiert europäische Dezimaltrennung.
 - **Fehlende DB-Tabellen:** `campaign_schema.sql` zuerst ausführen.
@@ -90,28 +90,7 @@ SELECT date, campaign_id, COUNT(*) FROM public.campaign_metrics GROUP BY date, c
 - Tests: automatisierte SQL smoke tests + unit tests für Import/Validator.
 - Production import: COPY from storage bucket, partitioning, observability, retries.
 
-## Evidence & Abgabe
-
-- `evidence/` enthält Screenshots/CSV-Exports der SQL-Checks.
-- Bitte lade folgende GitHub-User als Collaborators ein:
-
-  - `Mojojojo89i`
-  - `tp-tjarek`
-
 ## Hinweise für Reviewer
 
 - `.env` enthält Secrets und ist in `.gitignore`. Niemals pushen.
 - Falls ein Secret versehentlich gepusht wurde: sofort Key rotieren in Supabase.
-
-EOF
-
-# commit & push (edit commit message if you prefer)
-
-git add README.md
-git commit -m "docs: finalize concise README for Phase 1 (setup, deliverables, checks)"
-git push
-
-```
-
-Sobald du das ausgeführt hast, antworte hier mit **`README committed`** — dann machen wir als nächsten Schritt das UI-Polish (Filters + zusätzliche Metric + Table filter/sort) — ich gebe dir die genauen Änderungen + Commit-Message.
-```
