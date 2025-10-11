@@ -6,6 +6,7 @@ import SpendChart from './components/SpendChart'
 import FilterBar from './components/FilterBar'
 
 export default function App() {
+  // today in YYYY-MM-DD format (will be used as default "To" date)
   const today = new Date().toISOString().split('T')[0]
 
   const [campaigns, setCampaigns] = useState([])
@@ -13,6 +14,7 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  // DEFAULT: dateTo is today so the UI shows "To" = today on first load
   const [filters, setFilters] = useState({ dateTo: today })
 
   useEffect(() => {
@@ -37,6 +39,7 @@ export default function App() {
     load()
   }, [])
 
+  // create lookup map for campaigns
   const campaignMap = useMemo(() => {
     const m = {}
     campaigns.forEach(c => (m[c.campaign_id] = c))
@@ -47,6 +50,7 @@ export default function App() {
     return Array.from(new Set(campaigns.map(c => c.campaign_type))).filter(Boolean)
   }, [campaigns])
 
+  // apply filters to metrics
   const filteredMetrics = useMemo(() => {
     return metrics.filter(m => {
       if (filters.dateFrom && m.date < filters.dateFrom) return false
@@ -77,6 +81,7 @@ export default function App() {
   return (
     <div className="container">
       <h1>Touchpoint — Campaign Dashboard</h1>
+      <div className="subtitle">Data up to: <strong>{filters.dateTo || '—'}</strong></div>
 
       <FilterBar filters={filters} setFilters={setFilters} campaignTypes={campaignTypes} defaultDate={today} />
 
