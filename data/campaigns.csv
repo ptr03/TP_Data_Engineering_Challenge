@@ -1,0 +1,225 @@
+date,campaign_id,campaign_name,campaign_type,impressions,clicks,cost,conversions,conversion_value
+2024-09-01,C001,Brand - Exact Match,Search,12453,892,445.6,67,3350
+2024-09-01,C002,Generic - Broad,Search,45231,1203,1876.45,23,1265
+2024-09-01,C003,Shopping - All Products,Shopping,89432,2341,2156.78,89,5340
+2024-09-01,C004,Competitor - Targeting,Search,8934,234,567.89,12,720
+2024-09-01,C005,Remarketing - Display,Display,125634,456,234.56,34,1870
+2024-09-01,C006,YouTube - Brand Awareness,Video,234567,1245,1234.5,15,825
+2024-09-01,C007,DSA - Dynamic Search,Search,34567,876,987.65,43,2365
+2024-09-01,C008,Local - Store Visits,Search,15678,345,456.78,28,1540
+2024-09-02,C001,Brand - Exact Match,Search,13234,945,478.9,71,3550
+2024-09-02,C002,Generic - Broad,Search,47892,1298,2034.56,28,1540
+2024-09-02,C003,Shopping - All Products,Shopping,92341,2456,2287.9,94,5640
+2024-09-02,C004,Competitor - Targeting,Search,9123,256,612.34,15,900
+2024-09-02,C005,Remarketing - Display,Display,132456,489,256.78,38,2090
+2024-09-02,C006,YouTube - Brand Awareness,Video,245678,1287,1298.76,18,990
+2024-09-02,C007,DSA - Dynamic Search,Search,36789,923,1045.67,47,2585
+2024-09-02,C008,Local - Store Visits,Search,16234,367,487.9,31,1705
+2024-09-03,C001,Brand - Exact Match,Search,11987,876,434.2,65,3250
+2024-09-03,C002,Generic - Broad,Search,43567,1156,1787.9,21,1155
+2024-09-03,C003,Shopping - All Products,Shopping,87654,2287,2098.45,86,5160
+2024-09-03,C004,Competitor - Targeting,Search,8567,221,534.56,11,660
+2024-09-03,C005,Remarketing - Display,Display,121345,445,223.45,33,1815
+2024-09-03,C006,YouTube - Brand Awareness,Video,228934,1198,1178.9,14,770
+2024-09-03,C007,DSA - Dynamic Search,Search,33456,845,945.67,41,2255
+2024-09-03,C008,Local - Store Visits,Search,15123,334,445.67,27,1485
+2024-09-04,C001,Brand - Exact Match,Search,12876,912,467.8,69,3450
+2024-09-04,C002,Generic - Broad,Search,46123,1234,1923.45,25,1375
+2024-09-04,C003,Shopping - All Products,Shopping,90123,2398,2198.76,91,5460
+2024-09-04,C004,Competitor - Targeting,Search,8876,243,589.23,13,780
+2024-09-04,C005,Remarketing - Display,Display,128765,467,245.67,36,1980
+2024-09-04,C006,YouTube - Brand Awareness,Video,238765,1256,1267.89,16,880
+2024-09-04,C007,DSA - Dynamic Search,Search,35123,897,1012.34,45,2475
+2024-09-04,C008,Local - Store Visits,Search,15789,356,469.87,29,1595
+2024-09-05,C001,Brand - Exact Match,Search,13567,978,501.2,73,3650
+2024-09-05,C002,Generic - Broad,Search,48234,1267,1998.9,27,1485
+2024-09-05,C003,Shopping - All Products,Shopping,93456,2487,2298.9,97,5820
+2024-09-05,C004,Competitor - Targeting,Search,9234,267,623.45,16,960
+2024-09-05,C005,Remarketing - Display,Display,134567,501,267.89,39,2145
+2024-09-05,C006,YouTube - Brand Awareness,Video,248976,1298,1323.45,19,1045
+2024-09-05,C007,DSA - Dynamic Search,Search,36456,934,1067.89,48,2640
+2024-09-05,C008,Local - Store Visits,Search,16345,378,501.23,32,1760
+2024-09-06,C001,Brand - Exact Match,Search,14123,1001,512.3,75,3750
+2024-09-06,C002,Generic - Broad,Search,49876,1312,2078.9,29,1595
+2024-09-06,C003,Shopping - All Products,Shopping,95678,2567,2398.45,100,6000
+2024-09-06,C004,Competitor - Targeting,Search,9567,278,645.67,17,1020
+2024-09-06,C005,Remarketing - Display,Display,138976,523,278.9,41,2255
+2024-09-06,C006,YouTube - Brand Awareness,Video,256789,1345,1378.9,20,1100
+2024-09-06,C007,DSA - Dynamic Search,Search,37567,967,1098.76,50,2750
+2024-09-06,C008,Local - Store Visits,Search,16987,389,523.45,33,1815
+2024-09-07,C001,Brand - Exact Match,Search,13987,989,498.7,74,3700
+2024-09-07,C002,Generic - Broad,Search,48976,1289,2045.67,28,1540
+2024-09-07,C003,Shopping - All Products,Shopping,94567,2534,2356.78,98,5880
+2024-09-07,C004,Competitor - Targeting,Search,9456,272,634.56,16,960
+2024-09-07,C005,Remarketing - Display,Display,136789,512,272.34,40,2200
+2024-09-07,C006,YouTube - Brand Awareness,Video,253456,1323,1356.78,19,1045
+2024-09-07,C007,DSA - Dynamic Search,Search,37123,956,1078.9,49,2695
+2024-09-07,C008,Local - Store Visits,Search,16678,382,512.34,32,1760
+2024-09-08,C001,Brand - Exact Match,Search,12678,923,456.8,68,3400
+2024-09-08,C002,Generic - Broad,Search,46789,1245,1934.56,26,1430
+2024-09-08,C003,Shopping - All Products,Shopping,91234,2445,2245.67,93,5580
+2024-09-08,C004,Competitor - Targeting,Search,9123,261,612.34,15,900
+2024-09-08,C005,Remarketing - Display,Display,131234,489,261.23,37,2035
+2024-09-08,C006,YouTube - Brand Awareness,Video,246789,1289,1289.9,18,990
+2024-09-08,C007,DSA - Dynamic Search,Search,35678,923,1023.45,46,2530
+2024-09-08,C008,Local - Store Visits,Search,16123,367,489.9,30,1650
+2024-09-09,C001,Brand - Exact Match,Search,13456,967,489.9,72,3600
+2024-09-09,C002,Generic - Broad,Search,47896,1278,1989.9,27,1485
+2024-09-09,C003,Shopping - All Products,Shopping,92876,2498,2298.9,96,5760
+2024-09-09,C004,Competitor - Targeting,Search,9345,268,628.9,16,960
+2024-09-09,C005,Remarketing - Display,Display,133678,498,268.9,38,2090
+2024-09-09,C006,YouTube - Brand Awareness,Video,249876,1312,1312.45,19,1045
+2024-09-09,C007,DSA - Dynamic Search,Search,36234,945,1056.78,48,2640
+2024-09-09,C008,Local - Store Visits,Search,16456,376,498.9,31,1705
+2024-09-10,C001,Brand - Exact Match,Search,13234,956,478.9,71,3550
+2024-09-10,C002,Generic - Broad,Search,47234,1256,1956.78,26,1430
+2024-09-10,C003,Shopping - All Products,Shopping,91876,2467,2267.89,94,5640
+2024-09-10,C004,Competitor - Targeting,Search,9234,264,617.89,15,900
+2024-09-10,C005,Remarketing - Display,Display,132456,492,264.56,37,2035
+2024-09-10,C006,YouTube - Brand Awareness,Video,248234,1298,1298.76,18,990
+2024-09-10,C007,DSA - Dynamic Search,Search,35987,934,1034.56,47,2585
+2024-09-10,C008,Local - Store Visits,Search,16298,371,492.34,30,1650
+2024-09-11,C001,Brand - Exact Match,Search,12987,934,467.8,69,3450
+2024-09-11,C002,Generic - Broad,Search,46567,1234,1923.45,25,1375
+2024-09-11,C003,Shopping - All Products,Shopping,90456,2423,2234.56,92,5520
+2024-09-11,C004,Competitor - Targeting,Search,9045,257,601.23,15,900
+2024-09-11,C005,Remarketing - Display,Display,130987,481,257.89,36,1980
+2024-09-11,C006,YouTube - Brand Awareness,Video,245678,1278,1278.9,18,990
+2024-09-11,C007,DSA - Dynamic Search,Search,35456,912,1012.34,46,2530
+2024-09-11,C008,Local - Store Visits,Search,16067,364,481.23,30,1650
+2024-09-12,C001,Brand - Exact Match,Search,13678,989,501.2,73,3650
+2024-09-12,C002,Generic - Broad,Search,48123,1289,2012.34,27,1485
+2024-09-12,C003,Shopping - All Products,Shopping,93234,2512,2323.45,98,5880
+2024-09-12,C004,Competitor - Targeting,Search,9456,274,639.9,17,1020
+2024-09-12,C005,Remarketing - Display,Display,135678,509,274.56,40,2200
+2024-09-12,C006,YouTube - Brand Awareness,Video,251234,1323,1323.45,20,1100
+2024-09-12,C007,DSA - Dynamic Search,Search,36789,956,1067.89,49,2695
+2024-09-12,C008,Local - Store Visits,Search,16678,384,509.87,32,1760
+2024-09-13,C001,Brand - Exact Match,Search,14234,1012,523.4,76,3800
+2024-09-13,C002,Generic - Broad,Search,49234,1323,2089.9,29,1595
+2024-09-13,C003,Shopping - All Products,Shopping,95123,2589,2412.34,101,6060
+2024-09-13,C004,Competitor - Targeting,Search,9678,284,656.78,18,1080
+2024-09-13,C005,Remarketing - Display,Display,139876,534,289.9,42,2310
+2024-09-13,C006,YouTube - Brand Awareness,Video,258976,1367,1398.9,21,1155
+2024-09-13,C007,DSA - Dynamic Search,Search,37876,989,1123.45,51,2805
+2024-09-13,C008,Local - Store Visits,Search,17123,398,534.56,34,1870
+2024-09-14,C001,Brand - Exact Match,Search,14567,1034,534.6,77,3850
+2024-09-14,C002,Generic - Broad,Search,50123,1356,2134.56,30,1650
+2024-09-14,C003,Shopping - All Products,Shopping,96789,2634,2467.89,103,6180
+2024-09-14,C004,Competitor - Targeting,Search,9876,291,667.89,18,1080
+2024-09-14,C005,Remarketing - Display,Display,142345,545,298.9,43,2365
+2024-09-14,C006,YouTube - Brand Awareness,Video,263456,1389,1423.45,21,1155
+2024-09-14,C007,DSA - Dynamic Search,Search,38456,1001,1145.67,52,2860
+2024-09-14,C008,Local - Store Visits,Search,17456,406,545.67,35,1925
+2024-09-15,C001,Brand - Exact Match,Search,13897,1001,512.3,74,3700
+2024-09-15,C002,Generic - Broad,Search,48976,1334,2078.9,29,1595
+2024-09-15,C003,Shopping - All Products,Shopping,94876,2589,2423.45,100,6000
+2024-09-15,C004,Competitor - Targeting,Search,9678,286,656.78,18,1080
+2024-09-15,C005,Remarketing - Display,Display,140234,534,289.9,42,2310
+2024-09-15,C006,YouTube - Brand Awareness,Video,260123,1378,1398.9,21,1155
+2024-09-15,C007,DSA - Dynamic Search,Search,37987,989,1123.45,50,2750
+2024-09-15,C008,Local - Store Visits,Search,17234,398,534.56,34,1870
+2024-09-16,C001,Brand - Exact Match,Search,12567,945,467.8,70,3500
+2024-09-16,C002,Generic - Broad,Search,46789,1267,1967.89,27,1485
+2024-09-16,C003,Shopping - All Products,Shopping,91234,2478,2298.9,95,5700
+2024-09-16,C004,Competitor - Targeting,Search,9234,272,628.9,16,960
+2024-09-16,C005,Remarketing - Display,Display,134567,512,272.34,39,2145
+2024-09-16,C006,YouTube - Brand Awareness,Video,251234,1334,1334.56,20,1100
+2024-09-16,C007,DSA - Dynamic Search,Search,36456,956,1056.78,48,2640
+2024-09-16,C008,Local - Store Visits,Search,16567,384,509.87,32,1760
+2024-09-17,C001,Brand - Exact Match,Search,13123,967,489.9,72,3600
+2024-09-17,C002,Generic - Broad,Search,47567,1289,2001.23,28,1540
+2024-09-17,C003,Shopping - All Products,Shopping,92567,2512,2334.56,97,5820
+2024-09-17,C004,Competitor - Targeting,Search,9456,278,639.9,17,1020
+2024-09-17,C005,Remarketing - Display,Display,136789,523,278.9,40,2200
+2024-09-17,C006,YouTube - Brand Awareness,Video,254567,1356,1367.89,20,1100
+2024-09-17,C007,DSA - Dynamic Search,Search,37123,978,1089.9,49,2695
+2024-09-17,C008,Local - Store Visits,Search,16876,391,523.45,33,1815
+2024-09-18,C001,Brand - Exact Match,Search,13456,978,498.7,73,3650
+2024-09-18,C002,Generic - Broad,Search,48234,1312,2045.67,28,1540
+2024-09-18,C003,Shopping - All Products,Shopping,93678,2545,2367.89,99,5940
+2024-09-18,C004,Competitor - Targeting,Search,9567,281,645.67,17,1020
+2024-09-18,C005,Remarketing - Display,Display,138234,534,285.67,41,2255
+2024-09-18,C006,YouTube - Brand Awareness,Video,256789,1378,1389.9,21,1155
+2024-09-18,C007,DSA - Dynamic Search,Search,37678,989,1112.34,50,2750
+2024-09-18,C008,Local - Store Visits,Search,17123,398,534.56,34,1870
+2024-09-19,C001,Brand - Exact Match,Search,13789,989,501.2,74,3700
+2024-09-19,C002,Generic - Broad,Search,48678,1323,2067.89,28,1540
+2024-09-19,C003,Shopping - All Products,Shopping,94234,2567,2389.9,100,6000
+2024-09-19,C004,Competitor - Targeting,Search,9678,284,651.23,17,1020
+2024-09-19,C005,Remarketing - Display,Display,139456,545,291.23,42,2310
+2024-09-19,C006,YouTube - Brand Awareness,Video,258976,1389,1401.23,21,1155
+2024-09-19,C007,DSA - Dynamic Search,Search,38123,1001,1134.56,51,2805
+2024-09-19,C008,Local - Store Visits,Search,17345,404,545.67,34,1870
+2024-09-20,C001,Brand - Exact Match,Search,14012,1012,512.3,75,3750
+2024-09-20,C002,Generic - Broad,Search,49234,1345,2101.23,29,1595
+2024-09-20,C003,Shopping - All Products,Shopping,95456,2612,2434.56,102,6120
+2024-09-20,C004,Competitor - Targeting,Search,9876,289,662.34,18,1080
+2024-09-20,C005,Remarketing - Display,Display,141234,556,298.9,43,2365
+2024-09-20,C006,YouTube - Brand Awareness,Video,261234,1401,1423.45,21,1155
+2024-09-20,C007,DSA - Dynamic Search,Search,38678,1012,1156.78,52,2860
+2024-09-20,C008,Local - Store Visits,Search,17567,411,556.78,35,1925
+2024-09-21,C001,Brand - Exact Match,Search,14234,1023,523.4,76,3800
+2024-09-21,C002,Generic - Broad,Search,49876,1367,2123.45,30,1650
+2024-09-21,C003,Shopping - All Products,Shopping,96234,2645,2456.78,104,6240
+2024-09-21,C004,Competitor - Targeting,Search,10012,294,673.45,19,1140
+2024-09-21,C005,Remarketing - Display,Display,142876,567,305.67,44,2420
+2024-09-21,C006,YouTube - Brand Awareness,Video,263456,1423,1445.67,22,1210
+2024-09-21,C007,DSA - Dynamic Search,Search,39123,1023,1178.9,53,2915
+2024-09-21,C008,Local - Store Visits,Search,17876,418,567.89,36,1980
+2024-09-22,C001,Brand - Exact Match,Search,13678,1001,501.2,74,3700
+2024-09-22,C002,Generic - Broad,Search,48567,1334,2078.9,29,1595
+2024-09-22,C003,Shopping - All Products,Shopping,94567,2589,2412.34,101,6060
+2024-09-22,C004,Competitor - Targeting,Search,9767,286,656.78,18,1080
+2024-09-22,C005,Remarketing - Display,Display,140123,545,291.23,42,2310
+2024-09-22,C006,YouTube - Brand Awareness,Video,260123,1389,1412.34,21,1155
+2024-09-22,C007,DSA - Dynamic Search,Search,38456,1001,1145.67,51,2805
+2024-09-22,C008,Local - Store Visits,Search,17456,406,545.67,35,1925
+2024-09-23,C001,Brand - Exact Match,Search,12876,978,478.9,72,3600
+2024-09-23,C002,Generic - Broad,Search,47234,1298,2023.45,28,1540
+2024-09-23,C003,Shopping - All Products,Shopping,92345,2512,2334.56,98,5880
+2024-09-23,C004,Competitor - Targeting,Search,9456,278,639.9,17,1020
+2024-09-23,C005,Remarketing - Display,Display,136789,523,278.9,41,2255
+2024-09-23,C006,YouTube - Brand Awareness,Video,253456,1356,1378.9,20,1100
+2024-09-23,C007,DSA - Dynamic Search,Search,37456,978,1089.9,50,2750
+2024-09-23,C008,Local - Store Visits,Search,17012,395,534.56,33,1815
+2024-09-24,C001,Brand - Exact Match,Search,13234,989,489.9,73,3650
+2024-09-24,C002,Generic - Broad,Search,48123,1323,2056.78,28,1540
+2024-09-24,C003,Shopping - All Products,Shopping,93456,2545,2367.89,99,5940
+2024-09-24,C004,Competitor - Targeting,Search,9567,281,645.67,17,1020
+2024-09-24,C005,Remarketing - Display,Display,138234,534,285.67,41,2255
+2024-09-24,C006,YouTube - Brand Awareness,Video,256234,1378,1389.9,21,1155
+2024-09-24,C007,DSA - Dynamic Search,Search,37876,989,1112.34,50,2750
+2024-09-24,C008,Local - Store Visits,Search,17234,401,545.67,34,1870
+2024-09-25,C001,Brand - Exact Match,Search,13567,1001,501.2,74,3700
+2024-09-25,C002,Generic - Broad,Search,48678,1334,2078.9,28,1540
+2024-09-25,C003,Shopping - All Products,Shopping,94234,2578,2401.23,100,6000
+2024-09-25,C004,Competitor - Targeting,Search,9678,284,651.23,17,1020
+2024-09-25,C005,Remarketing - Display,Display,139456,545,291.23,42,2310
+2024-09-25,C006,YouTube - Brand Awareness,Video,258456,1389,1401.23,21,1155
+2024-09-25,C007,DSA - Dynamic Search,Search,38234,1001,1134.56,51,2805
+2024-09-25,C008,Local - Store Visits,Search,17456,407,550.78,34,1870
+2024-09-26,C001,Brand - Exact Match,Search,13897,1012,512.3,75,3750
+2024-09-26,C002,Generic - Broad,Search,49234,1356,2101.23,29,1595
+2024-09-26,C003,Shopping - All Products,Shopping,95123,2601,2423.45,102,6120
+2024-09-26,C004,Competitor - Targeting,Search,9876,289,662.34,18,1080
+2024-09-26,C005,Remarketing - Display,Display,141234,556,298.9,43,2365
+2024-09-26,C006,YouTube - Brand Awareness,Video,261234,1401,1423.45,21,1155
+2024-09-26,C007,DSA - Dynamic Search,Search,38678,1012,1156.78,52,2860
+2024-09-26,C008,Local - Store Visits,Search,17678,414,561.23,35,1925
+2024-09-27,C001,Brand - Exact Match,Search,14123,1023,523.4,76,3800
+2024-09-27,C002,Generic - Broad,Search,49876,1367,2123.45,30,1650
+2024-09-27,C003,Shopping - All Products,Shopping,96234,2634,2445.67,103,6180
+2024-09-27,C004,Competitor - Targeting,Search,10012,294,673.45,19,1140
+2024-09-27,C005,Remarketing - Display,Display,142876,567,305.67,44,2420
+2024-09-27,C006,YouTube - Brand Awareness,Video,263456,1423,1445.67,22,1210
+2024-09-27,C007,DSA - Dynamic Search,Search,39012,1023,1178.9,53,2915
+2024-09-27,C008,Local - Store Visits,Search,17876,420,572.34,36,1980
+2024-09-28,C001,Brand - Exact Match,Search,13567,989,489.9,73,3650
+2024-09-28,C002,Generic - Broad,Search,48234,1312,2045.67,28,1540
+2024-09-28,C003,Shopping - All Products,Shopping,93876,2567,2378.9,100,6000
+2024-09-28,C004,Competitor - Targeting,Search,9678,284,651.23,17,1020
+2024-09-28,C005,Remarketing - Display,Display,139456,540,289.9,42,2310
+2024-09-28,C006,YouTube - Brand Awareness,Video,258976,1389,1401.23,21,1155
+2024-09-28,C007,DSA - Dynamic Search,Search,38123,995,1129.9,51,2805
+2024-09-28,C008,Local - Store Visits,Search,17345,404,545.67,34,1870

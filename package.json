@@ -1,0 +1,16 @@
+{
+  "name": "tp-data-engineering",
+  "version": "1.0.0",
+  "description": "Touchpoint case - CSV importer and validator",
+  "main": "import.js",
+  "scripts": {
+    "validate": "node csv_validator.js data/campaigns.csv",
+    "import": "node import.js data/campaigns.csv"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "csv-parser": "^3.0.0",
+    "dotenv": "^16.3.1"
+  },
+  "license": "MIT"
+}
