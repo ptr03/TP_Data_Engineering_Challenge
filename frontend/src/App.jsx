@@ -6,11 +6,16 @@ import SpendChart from './components/SpendChart'
 import FilterBar from './components/FilterBar'
 
 export default function App() {
+  // today in YYYY-MM-DD format (will be used as default "To" date)
+  const today = new Date().toISOString().split('T')[0]
+
   const [campaigns, setCampaigns] = useState([])
   const [metrics, setMetrics] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [filters, setFilters] = useState({})
+
+  // DEFAULT: dateTo is today so the UI shows "To" = today on first load
+  const [filters, setFilters] = useState({ dateTo: today })
 
   useEffect(() => {
     async function load() {
@@ -34,30 +39,26 @@ export default function App() {
     load()
   }, [])
 
-  // build a lookup for campaign metadata
+  // create lookup map for campaigns
   const campaignMap = useMemo(() => {
     const m = {}
-    campaigns.forEach(c => m[c.campaign_id] = c)
+    campaigns.forEach(c => (m[c.campaign_id] = c))
     return m
   }, [campaigns])
 
-  // unique campaign types for select
   const campaignTypes = useMemo(() => {
     return Array.from(new Set(campaigns.map(c => c.campaign_type))).filter(Boolean)
   }, [campaigns])
 
-  // apply filters to metrics and campaigns
+  // apply filters to metrics
   const filteredMetrics = useMemo(() => {
     return metrics.filter(m => {
-      // date filter
       if (filters.dateFrom && m.date < filters.dateFrom) return false
       if (filters.dateTo && m.date > filters.dateTo) return false
-      // campaign type filter
       if (filters.campaignType) {
         const c = campaignMap[m.campaign_id]
         if (!c || c.campaign_type !== filters.campaignType) return false
       }
-      // search filter (search in id or name)
       if (filters.search && filters.search.trim() !== '') {
         const q = filters.search.toLowerCase()
         const c = campaignMap[m.campaign_id] || {}
@@ -70,7 +71,6 @@ export default function App() {
   }, [metrics, filters, campaignMap])
 
   const filteredCampaigns = useMemo(() => {
-    // only return campaigns that exist in the filtered metrics (reduce clutter)
     const setIds = new Set(filteredMetrics.map(m => m.campaign_id))
     return campaigns.filter(c => setIds.has(c.campaign_id))
   }, [campaigns, filteredMetrics])
@@ -80,9 +80,10 @@ export default function App() {
 
   return (
     <div className="container">
-      <h1>Touchpoint — Campaign Dashboard (Phase 1)</h1>
+      <h1>Touchpoint — Campaign Dashboard</h1>
+      <div className="subtitle">Data up to: <strong>{filters.dateTo || '—'}</strong></div>
 
-      <FilterBar filters={filters} setFilters={setFilters} campaignTypes={campaignTypes} />
+      <FilterBar filters={filters} setFilters={setFilters} campaignTypes={campaignTypes} defaultDate={today} />
 
       <KPIs metrics={filteredMetrics} />
       <SpendChart metrics={filteredMetrics} />
