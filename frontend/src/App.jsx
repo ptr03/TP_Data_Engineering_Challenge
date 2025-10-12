@@ -4,6 +4,8 @@ import KPIs from './components/KPIs'
 import CampaignTable from './components/CampaignTable'
 import SpendChart from './components/SpendChart'
 import FilterBar from './components/FilterBar'
+import ROASChart from './components/ROASChart'
+
 
 export default function App() {
   // today in YYYY-MM-DD format (will be used as default "To" date)
@@ -86,6 +88,14 @@ export default function App() {
 
       <KPIs metrics={filteredMetrics} />
       <SpendChart metrics={filteredMetrics} />
+
+      {/* ROAS chart: clicking a bar will set the search filter to that campaign ID */}
+      <ROASChart
+        campaigns={campaigns}
+        metrics={filteredMetrics}
+        onBarClick={(campaignId) => setFilters(prev => ({ ...prev, search: campaignId }))}
+      />
+
       <CampaignTable campaigns={filteredCampaigns} metrics={filteredMetrics} />
     </div>
   )
