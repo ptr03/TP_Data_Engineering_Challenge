@@ -4,7 +4,6 @@ import {
   CartesianGrid, ReferenceLine, Brush
 } from 'recharts';
 
-// ---- Helpers ----
 const fmtEUR = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' });
 const fmtDate = (d) =>
   d ? new Date(d).toLocaleDateString('de-DE', { year: 'numeric', month: '2-digit', day: '2-digit' }) : '';
@@ -23,11 +22,10 @@ function fillDaily(data) {
 }
 
 export default function SpendChart({ metrics, onDateWindowChange = () => {} }) {
-  // --- Aggregation + Tageslücken füllen ---
   const { data, avg } = useMemo(() => {
     const byDate = {};
     for (const m of metrics || []) {
-      const d = m.date; // erwartet YYYY-MM-DD
+      const d = m.date; 
       const cost = Number(m.cost || 0);
       const impressions = Number(m.impressions || 0);
       if (!byDate[d]) byDate[d] = { date: d, cost: 0, impressions: 0 };
@@ -41,13 +39,11 @@ export default function SpendChart({ metrics, onDateWindowChange = () => {} }) {
     return { data: arr, avg };
   }, [metrics]);
 
-  // --- Brush-Zustand und Sichtfenster ---
   const [range, setRange] = useState({
     startIndex: 0,
     endIndex: Math.max(0, (data?.length || 1) - 1),
   });
 
-  // Wenn sich die Datenlänge ändert (z. B. Filter/Selektion), Range sicher anpassen
   useEffect(() => {
     const n = data?.length || 0;
     if (!n) {
@@ -57,7 +53,6 @@ export default function SpendChart({ metrics, onDateWindowChange = () => {} }) {
     setRange(prev => {
       const startIndex = Math.min(Math.max(0, prev.startIndex), n - 1);
       const endIndex = Math.min(Math.max(startIndex, prev.endIndex), n - 1);
-      // Wenn sich effektiv nichts ändert, keinen State-Update triggern
       if (startIndex === prev.startIndex && endIndex === prev.endIndex) return prev;
       return { startIndex, endIndex };
     });
@@ -66,15 +61,12 @@ export default function SpendChart({ metrics, onDateWindowChange = () => {} }) {
   const view = useMemo(() => {
     if (!data?.length) return [];
     const { startIndex, endIndex } = range;
-    // slice toleriert end < start (liefert dann []), wir clampen bereits oben
     return data.slice(startIndex, endIndex + 1);
   }, [data, range]);
 
-  // --- Formatierer ---
   const yFmt = (v) => fmtEUR.format(v);
   const xTickFmt = (v) => fmtDate(v);
 
-  // Nur senden, wenn sich das Fenster wirklich geändert hat
   const lastWindowRef = useRef({ from: null, to: null });
   useEffect(() => {
     const n = data?.length || 0;
@@ -98,7 +90,6 @@ export default function SpendChart({ metrics, onDateWindowChange = () => {} }) {
         Täglich · Durchschnitt: <strong>{fmtEUR.format(avg)}</strong>
       </div>
 
-      {/* Haupt-Chart: zeigt nur den über Brush gewählten Bereich */}
       <ResponsiveContainer width="100%" height={280}>
         <LineChart data={view} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
           <CartesianGrid vertical={false} strokeDasharray="3 3" />
@@ -138,7 +129,6 @@ export default function SpendChart({ metrics, onDateWindowChange = () => {} }) {
         </LineChart>
       </ResponsiveContainer>
 
-      {/* Schmaler Brush unten + Datumslabels links/rechts */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 6 }}>
         <span style={{ fontSize: 13, color: '#6b7280', width: 80, textAlign: 'center' }}>
           {data?.[0]?.date ? fmtDate(data[0].date) : ''}
@@ -155,7 +145,6 @@ export default function SpendChart({ metrics, onDateWindowChange = () => {} }) {
                 endIndex={range.endIndex}
                 onChange={(r) => {
                   if (!r) return;
-                  // defensiv clampen
                   const n = data?.length || 0;
                   const s = Math.min(Math.max(0, r.startIndex ?? 0), Math.max(0, n - 1));
                   const e = Math.min(Math.max(0, r.endIndex ?? s), Math.max(0, n - 1));
