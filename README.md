@@ -30,7 +30,7 @@ Klon das Projekt und öffne anschließend den Projektordner im Root-Verzeichnis.
 ---
 
 ### 3. Root-Dependencies installieren
-
+Terminal:
 ```bash
 npm install
 ```
@@ -40,7 +40,7 @@ npm install
 ### 4. Umgebungsvariablen (Server-Seite) einrichten
 
 Erstelle im Root-Verzeichnis eine `.env`-Datei auf Basis des Beispiels:
-
+Terminal:
 ```bash
 cp env.example .env
 ```
@@ -57,6 +57,8 @@ SUPABASE_SERVICE_KEY
 ### 5. Frontend-Umgebung konfigurieren
 
 Wechsle in den `frontend`-Ordner und lege dort eine `.env.local`-Datei an.
+
+Terminal:
 ```bash
 cd frontend
 cp env.local.example .env.local
@@ -76,6 +78,7 @@ Den Inhalt der Datei `campaign.schema.sql` im Supabase SQL Editor ausführen, um
 
 Zur Validierung und zum Import der Daten (z. B. Kampagnendaten):
 
+Terminal:
 ```bash
 cd ..
 npm run validate
@@ -86,6 +89,7 @@ node import.js data/campaigns.csv
 
 ### 8. Frontend starten
 
+Terminal:
 ```bash
 cd frontend
 npm install
@@ -100,6 +104,7 @@ Nach dem Befehl `npm run dev` erscheint in der Konsole ein Link (z. B. `http://l
 
 Falls du das Projekt für den Live-Betrieb bauen möchtest:
 
+Terminal:
 ```bash
 npm run build
 ```
