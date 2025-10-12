@@ -94,3 +94,5 @@ SELECT date, campaign_id, COUNT(*) FROM public.campaign_metrics GROUP BY date, c
 
 - `.env` enthält Secrets und ist in `.gitignore`. Niemals pushen.
 - Falls ein Secret versehentlich gepusht wurde: sofort Key rotieren in Supabase.
+- Für das Frontend lege `frontend/.env.local` an und setze dort `VITE_SUPABASE_URL` und `VITE_SUPABASE_ANON_KEY`. Die Root-`.env` darf nur den Service-Key für `import.js` enthalten (niemals public).
+- Security-Reminder: Wenn ein Service-Role-Key versehentlich gepusht wurde — Key sofort in Supabase rotieren und ggf. Git-History säubern.

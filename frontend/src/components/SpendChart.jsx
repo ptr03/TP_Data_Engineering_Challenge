@@ -23,7 +23,13 @@ export default function SpendChart({ metrics }) {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis />
-          <Tooltip />
+          <Tooltip 
+            formatter={(value) => {
+              if (value === null || value === undefined) return value;
+              return Number(value).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            }}
+            labelFormatter={(label) => label}
+          />
           <Line type="monotone" dataKey="cost" stroke="#8884d8" name="Cost (€)" />
         </LineChart>
       </ResponsiveContainer>
