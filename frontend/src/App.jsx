@@ -39,19 +39,17 @@ export default function App() {
     load()
   }, [])
 
-  // build a lookup for campaign metadata
   const campaignMap = useMemo(() => {
     const m = {}
     campaigns.forEach(c => (m[c.campaign_id] = c))
     return m
   }, [campaigns])
 
-  // unique campaign types for select
   const campaignTypes = useMemo(() => {
     return Array.from(new Set(campaigns.map(c => c.campaign_type))).filter(Boolean)
   }, [campaigns])
 
-  // apply filters to metrics and campaigns
+  // apply filters to metrics (date/type/search)
   const filteredMetrics = useMemo(() => {
     return metrics.filter(m => {
       if (filters.dateFrom && m.date < filters.dateFrom) return false
@@ -76,14 +74,22 @@ export default function App() {
     return campaigns.filter(c => setIds.has(c.campaign_id))
   }, [campaigns, filteredMetrics])
 
-  // Toggle selection: click same id again -> deselect
+  // metrics used for KPIs/SpendChart: if a campaign selected, show metrics just for that campaign in KPIs/SpendChart
+  const metricsForKPIs = useMemo(() => {
+    if (!selectedCampaign) return filteredMetrics
+    return filteredMetrics.filter(m => m.campaign_id === selectedCampaign)
+  }, [filteredMetrics, selectedCampaign])
+
+  // Toggle selection: select/deselect a campaign.
+  // IMPORTANT: do NOT change filters/search here — the table stays showing ALL filteredCampaigns.
   const toggleSelectedCampaign = (id) => {
-    setSelectedCampaign(prev => {
-      const next = prev === id ? null : id
-      // sync search filter to show the campaign in the table when selected, clear when deselected
-      setFilters(prevFilters => ({ ...prevFilters, search: next || '' }))
-      return next
-    })
+    setSelectedCampaign(prev => (prev === id ? null : id))
+  }
+
+  // Reset: clear filters and selected campaign
+  const handleReset = () => {
+    setFilters({ dateTo: today })
+    setSelectedCampaign(null)
   }
 
   if (loading) return <div className="container"><p>Loading data…</p></div>
@@ -93,10 +99,10 @@ export default function App() {
     <div className="container">
       <h1>Touchpoint — Campaign Dashboard</h1>
 
-      <FilterBar filters={filters} setFilters={setFilters} campaignTypes={campaignTypes} defaultDate={today} />
+      <FilterBar filters={filters} setFilters={setFilters} campaignTypes={campaignTypes} defaultDate={today} onReset={handleReset} />
 
-      <KPIs metrics={filteredMetrics} />
-      <SpendChart metrics={filteredMetrics} />
+      <KPIs metrics={metricsForKPIs} />
+      <SpendChart metrics={metricsForKPIs} />
 
       <ROASChart
         campaigns={campaigns}
