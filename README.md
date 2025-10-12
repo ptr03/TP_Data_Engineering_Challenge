@@ -67,10 +67,12 @@ Setze die Werte für:
 VITE_SUPABASE_URL
 VITE_SUPABASE_ANON_KEY
 ```
+### 6. SQL-Code in Supabase ausführen
+Den Inhalt der Datei `campaign.schema.sql` im Supabase SQL Editor ausführen, um die Tabellenstruktur anzulegen.
 
 ---
 
-### 6. Daten prüfen & importieren
+### 7. Daten prüfen & importieren
 
 Zur Validierung und zum Import der Daten (z. B. Kampagnendaten):
 
@@ -82,7 +84,7 @@ node import.js data/campaigns.csv
 
 ---
 
-### 7. Frontend starten
+### 8. Frontend starten
 
 ```bash
 cd frontend
@@ -94,7 +96,7 @@ Nach dem Befehl `npm run dev` erscheint in der Konsole ein Link (z. B. `http://l
 
 ---
 
-### 8. (Optional) Production Build erstellen
+### 9. (Optional) Production Build erstellen
 
 Falls du das Projekt für den Live-Betrieb bauen möchtest:
 
