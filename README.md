@@ -145,9 +145,10 @@ SELECT date, campaign_id, COUNT(*) FROM public.campaign_metrics GROUP BY date, c
 
 ## Was ich bei mehr Zeit machen würde
 
-- Frontend: Filters (Datum, Campaign Type), Sortierung, Pagination, bessere UI/UX.
-- Tests: automatisierte SQL smoke tests + unit tests für Import/Validator.
-- Production import: COPY from storage bucket, partitioning, observability, retries.
+- Frontend: bessere UI/UX.
+- Tests: automatisierte SQL tests + unit tests für Import/Validator.
+- Production import: COPY from storage bucket
+- Automatischer Datenfluss: CSV-Upload (lokal oder via Storage) triggert Import nach Supabase und aktualisiert das Frontend selbständig.
 
 ## Hinweise für Reviewer
 
