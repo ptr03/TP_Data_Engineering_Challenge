@@ -61,7 +61,7 @@ export default function ROASChart({ campaigns = [], metrics = [], onBarClick = (
   }
 
   return (
-    <div className="chart-wrap" style={{ height: 360, background: 'transparent', marginBottom: 32 }}>
+    <div className="chart-wrap" style={{ height: 360, background: 'transparent', marginBottom: 50 }}>
       <h2 style={{ marginBottom: 6 }}>ROAS per Campaign</h2>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 20, left: 8, bottom: 70 }}>
