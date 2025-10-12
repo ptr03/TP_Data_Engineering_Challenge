@@ -49,6 +49,28 @@ export default function App() {
     return Array.from(new Set(campaigns.map(c => c.campaign_type))).filter(Boolean)
   }, [campaigns])
 
+  // --- NEW: compute CSV min/max dates (YYYY-MM-DD) ---
+  const [minDate, maxDate] = useMemo(() => {
+    if (!metrics.length) return ['', '']
+    const dates = [...new Set(metrics.map(m => m.date))].sort()
+    return [dates[0], dates[dates.length - 1]]
+  }, [metrics])
+
+  // --- NEW: ensure dateTo defaults to last CSV date (and stays within range) ---
+  useEffect(() => {
+    if (!maxDate) return
+    setFilters(prev => {
+      const next = { ...prev }
+      // if dateTo not set or outside CSV range, snap to maxDate
+      if (!next.dateTo || next.dateTo > maxDate) next.dateTo = maxDate
+      // if dateFrom set and below min, snap up
+      if (next.dateFrom && next.dateFrom < minDate) next.dateFrom = minDate
+      // if dateFrom > dateTo, align
+      if (next.dateFrom && next.dateTo && next.dateFrom > next.dateTo) next.dateFrom = next.dateTo
+      return next
+    })
+  }, [minDate, maxDate])
+
   // apply filters to metrics (date/type/search)
   const filteredMetrics = useMemo(() => {
     return metrics.filter(m => {
@@ -88,7 +110,8 @@ export default function App() {
 
   // Reset: clear filters and selected campaign
   const handleReset = () => {
-    setFilters({ dateTo: today })
+    // use last CSV date rather than 'today' so it stays within range
+    setFilters({ dateTo: maxDate || today })
     setSelectedCampaign(null)
   }
 
@@ -99,7 +122,14 @@ export default function App() {
     <div className="container">
       <h1>Touchpoint — Campaign Dashboard</h1>
 
-      <FilterBar filters={filters} setFilters={setFilters} campaignTypes={campaignTypes} defaultDate={today} onReset={handleReset} />
+      <FilterBar
+        filters={filters}
+        setFilters={setFilters}
+        campaignTypes={campaignTypes}
+        defaultDate={maxDate || today}   
+        minDate={minDate}                
+        maxDate={maxDate}                
+      />
 
       <KPIs metrics={metricsForKPIs} />
       <SpendChart metrics={metricsForKPIs} />

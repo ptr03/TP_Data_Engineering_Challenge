@@ -1,9 +1,36 @@
 import React from 'react'
 
-export default function FilterBar({ filters, setFilters, campaignTypes, defaultDate, onReset }) {
+export default function FilterBar({
+  filters,
+  setFilters,
+  campaignTypes,
+  defaultDate,
+  onReset,
+  minDate,   // e.g. '2024-09-01'
+  maxDate    // e.g. '2024-09-30'
+}) {
+  const isISO = (v) => /^\d{4}-\d{2}-\d{2}$/.test(v || '')
+  const clampDate = (v) => {
+    if (!isISO(v)) return v
+    if (isISO(minDate) && v < minDate) return minDate
+    if (isISO(maxDate) && v > maxDate) return maxDate
+    return v
+  }
+
   const onChange = (e) => {
     const { name, value } = e.target
-    setFilters(prev => ({ ...prev, [name]: value }))
+    const clamped = (name === 'dateFrom' || name === 'dateTo') ? clampDate(value) : value
+    setFilters(prev => ({ ...prev, [name]: clamped }))
+  }
+
+  const onBlur = (e) => {
+    const { name, value } = e.target
+    if (name === 'dateFrom' || name === 'dateTo') {
+      const clamped = clampDate(value)
+      if (clamped !== value) {
+        setFilters(prev => ({ ...prev, [name]: clamped }))
+      }
+    }
   }
 
   const reset = () => {
@@ -15,12 +42,30 @@ export default function FilterBar({ filters, setFilters, campaignTypes, defaultD
     <div className="filter-bar">
       <div className="filter-group">
         <label className="filter-label from-label">From</label>
-        <input className="filter-input" type="date" name="dateFrom" value={filters.dateFrom || ''} onChange={onChange} />
+        <input
+          className="filter-input"
+          type="date"
+          name="dateFrom"
+          value={filters.dateFrom || ''}
+          onChange={onChange}
+          onBlur={onBlur}
+          min={isISO(minDate) ? minDate : undefined}
+          max={isISO(maxDate) ? maxDate : undefined}
+        />
       </div>
 
       <div className="filter-group">
         <label className="filter-label to-label">To</label>
-        <input className="filter-input" type="date" name="dateTo" value={filters.dateTo || ''} onChange={onChange} />
+        <input
+          className="filter-input"
+          type="date"
+          name="dateTo"
+          value={filters.dateTo || ''}
+          onChange={onChange}
+          onBlur={onBlur}
+          min={isISO(minDate) ? minDate : undefined}
+          max={isISO(maxDate) ? maxDate : undefined}
+        />
       </div>
 
       <div className="filter-group">
