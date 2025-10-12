@@ -75,6 +75,7 @@ VITE_SUPABASE_ANON_KEY
 Zur Validierung und zum Import der Daten (z. B. Kampagnendaten):
 
 ```bash
+cd ..
 npm run validate
 node import.js data/campaigns.csv
 ```
