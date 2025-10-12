@@ -85,9 +85,7 @@ npm install
 npm run dev
 ```
 
-Danach kannst du das Frontend unter
-👉 **[http://localhost:5173](http://localhost:5173)**
-im Browser öffnen.
+> Nach dem Befehl `npm run dev` erscheint in der Konsole ein Link (z. B. `http://localhost:5173`). Du kannst ihn mit **Strg + Klick** direkt im Browser öffnen.
 
 ---
 
