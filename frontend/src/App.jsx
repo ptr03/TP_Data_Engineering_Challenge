@@ -14,11 +14,13 @@ export default function App() {
   const [error, setError] = useState(null)
   const [filters, setFilters] = useState({ dateTo: today })
 
+  // selected campaign id (null = none)
   const [selectedCampaign, setSelectedCampaign] = useState(null)
 
+  // seed used to force-remount some visuals on reset (kept, harmless)
   const [resetSeed, setResetSeed] = useState(0)
 
-  const [brushWindow, setBrushWindow] = useState(null)
+  const isISO = (v) => /^\d{4}-\d{2}-\d{2}$/.test(v || '')
 
   useEffect(() => {
     async function load() {
@@ -52,27 +54,31 @@ export default function App() {
     return Array.from(new Set(campaigns.map(c => c.campaign_type))).filter(Boolean)
   }, [campaigns])
 
+  // --- compute CSV min/max dates (YYYY-MM-DD) ---
   const [minDate, maxDate] = useMemo(() => {
     if (!metrics.length) return ['', '']
     const dates = [...new Set(metrics.map(m => m.date))].sort()
     return [dates[0], dates[dates.length - 1]]
   }, [metrics])
 
+  // --- One-time align dateTo to CSV maxDate (no constant rewriting) ---
   useEffect(() => {
     if (!maxDate) return
     setFilters(prev => {
-      const next = { ...prev }
-      if (!next.dateTo || next.dateTo > maxDate) next.dateTo = maxDate
-      if (next.dateFrom && next.dateFrom < minDate) next.dateFrom = minDate
-      if (next.dateFrom && next.dateTo && next.dateFrom > next.dateTo) next.dateFrom = next.dateTo
-      return next
+      const needs = !isISO(prev.dateTo) || prev.dateTo > maxDate
+      return needs ? { ...prev, dateTo: maxDate } : prev
     })
-  }, [minDate, maxDate])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [maxDate])
 
+  // apply filters to metrics (date/type/search)
   const filteredMetrics = useMemo(() => {
+    const from = isISO(filters.dateFrom) ? filters.dateFrom : null
+    const to   = isISO(filters.dateTo)   ? filters.dateTo   : null
+
     return metrics.filter(m => {
-      if (filters.dateFrom && m.date < filters.dateFrom) return false
-      if (filters.dateTo && m.date > filters.dateTo) return false
+      if (from && m.date < from) return false
+      if (to   && m.date > to)   return false
       if (filters.campaignType) {
         const c = campaignMap[m.campaign_id]
         if (!c || c.campaign_type !== filters.campaignType) return false
@@ -93,25 +99,21 @@ export default function App() {
     return campaigns.filter(c => setIds.has(c.campaign_id))
   }, [campaigns, filteredMetrics])
 
+  // Base metrics for KPIs & SpendChart (optionally narrowed by selectedCampaign)
   const metricsBase = useMemo(() => {
     if (!selectedCampaign) return filteredMetrics
     return filteredMetrics.filter(m => m.campaign_id === selectedCampaign)
   }, [filteredMetrics, selectedCampaign])
 
-  const metricsForKPIs = useMemo(() => {
-    if (!brushWindow?.from || !brushWindow?.to) return metricsBase
-    return metricsBase.filter(m => m.date >= brushWindow.from && m.date <= brushWindow.to)
-  }, [metricsBase, brushWindow])
-
   const toggleSelectedCampaign = (id) => {
     setSelectedCampaign(prev => (prev === id ? null : id))
   }
 
+  // Reset: clear everything to initial state
   const handleReset = () => {
     setFilters({ dateTo: maxDate || today })
     setSelectedCampaign(null)
-    setBrushWindow(null)               
-    setResetSeed(s => s + 1)         
+    setResetSeed(s => s + 1)
   }
 
   if (loading) return <div className="container"><p>Loading data…</p></div>
@@ -131,16 +133,13 @@ export default function App() {
         onReset={handleReset}
       />
 
-      <KPIs key={`kpis-${resetSeed}`} metrics={metricsForKPIs} />
+      {/* KPIs reflect filters (and selected campaign, if any) */}
+      <KPIs key={`kpis-${resetSeed}`} metrics={metricsBase} />
 
-      <SpendChart
-        key={`spend-${resetSeed}-${maxDate || today}`}
-        metrics={metricsBase}
-        onDateWindowChange={setBrushWindow}
-      />
+      {/* SpendChart reflects filters (and selected campaign) */}
+      <SpendChart key={`spend-${resetSeed}`} metrics={metricsBase} />
 
       <ROASChart
-        key={`roas-${resetSeed}`}
         campaigns={campaigns}
         metrics={filteredMetrics}
         selectedCampaign={selectedCampaign}
@@ -148,7 +147,6 @@ export default function App() {
       />
 
       <CampaignTable
-        key={`table-${resetSeed}`}
         campaigns={filteredCampaigns}
         metrics={filteredMetrics}
         selectedCampaign={selectedCampaign}
