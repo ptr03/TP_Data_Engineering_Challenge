@@ -1,63 +1,39 @@
 import React, { useMemo, useState } from 'react'
 
-/**
- * CampaignTable
- * Props:
- *  - campaigns: array of campaign objects { campaign_id, campaign_name, campaign_type }
- *  - metrics: array of metric rows { campaign_id, date, impressions, clicks, cost, conversions, conversion_value }
- *
- * This component aggregates metrics per campaign and supports sorting on multiple keys.
- */
-
 function formatNumber(n) {
   if (n === null || n === undefined) return '—'
   return n.toLocaleString(undefined, { maximumFractionDigits: 0 })
 }
-
 function formatMoney(n) {
   if (n === null || n === undefined) return '—'
   return n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
-
 function safeDiv(a, b) {
   if (!b || b === 0) return 0
   return a / b
 }
-
 function sortRows(rows, key, dir) {
   const mul = dir === 'asc' ? 1 : -1
   return [...rows].sort((a, b) => {
     const va = a[key] ?? 0
     const vb = b[key] ?? 0
-
-    // string compare
     if (typeof va === 'string' && typeof vb === 'string') {
       return va.localeCompare(vb) * mul
     }
-    // numeric
     return (Number(va) - Number(vb)) * mul
   })
 }
 
-export default function CampaignTable({ campaigns = [], metrics = [] }) {
-  // sorting state
-  const [sortKey, setSortKey] = useState('roas')   // default sort by ROAS
-  const [sortDir, setSortDir] = useState('desc')  // 'asc' | 'desc'
+export default function CampaignTable({ campaigns = [], metrics = [], selectedCampaign = null }) {
+  const [sortKey, setSortKey] = useState('roas')
+  const [sortDir, setSortDir] = useState('desc')
 
-  // aggregate metrics by campaign_id
   const aggregated = useMemo(() => {
     const map = {}
     for (const m of metrics) {
       const id = m.campaign_id
       if (!map[id]) {
-        map[id] = {
-          campaign_id: id,
-          impressions: 0,
-          clicks: 0,
-          cost: 0,
-          conversions: 0,
-          conversion_value: 0
-        }
+        map[id] = { campaign_id: id, impressions: 0, clicks: 0, cost: 0, conversions: 0, conversion_value: 0 }
       }
       map[id].impressions += Number(m.impressions || 0)
       map[id].clicks += Number(m.clicks || 0)
@@ -66,7 +42,6 @@ export default function CampaignTable({ campaigns = [], metrics = [] }) {
       map[id].conversion_value += Number(parseFloat(m.conversion_value || 0))
     }
 
-    // merge campaign metadata
     const rows = Object.values(map).map(r => {
       const meta = campaigns.find(c => c.campaign_id === r.campaign_id) || {}
       const ctr = safeDiv(r.clicks, r.impressions) * 100
@@ -84,26 +59,22 @@ export default function CampaignTable({ campaigns = [], metrics = [] }) {
         roas: Number(roas.toFixed(2))
       }
     })
-
     return rows
   }, [metrics, campaigns])
 
-  // apply sorting
-  const sorted = useMemo(() => {
-    return sortRows(aggregated, sortKey, sortDir)
-  }, [aggregated, sortKey, sortDir])
+  const sorted = useMemo(() => sortRows(aggregated, sortKey, sortDir), [aggregated, sortKey, sortDir])
 
   const toggleSort = (key) => {
     if (key === sortKey) {
       setSortDir(prev => (prev === 'asc' ? 'desc' : 'asc'))
     } else {
       setSortKey(key)
-      setSortDir('desc') // default new key to desc
+      setSortDir('desc')
     }
   }
 
   const sortIndicator = (key) => {
-    if (key !== sortKey) return '↕' // unsorted marker
+    if (key !== sortKey) return '↕'
     return sortDir === 'asc' ? '↑' : '↓'
   }
 
@@ -122,12 +93,12 @@ export default function CampaignTable({ campaigns = [], metrics = [] }) {
             <th style={{ cursor:'pointer', textAlign:'right' }} onClick={() => toggleSort('conversion_value')}>Conv. value (€) {sortIndicator('conversion_value')}</th>
             <th style={{ cursor:'pointer', textAlign:'right' }} onClick={() => toggleSort('ctr')}>CTR (%) {sortIndicator('ctr')}</th>
             <th style={{ cursor:'pointer', textAlign:'right' }} onClick={() => toggleSort('roas')}>ROAS {sortIndicator('roas')}</th>
-            <th style={{ cursor:'pointer', textAlign:'right' }}>ID</th> {/* static column - we won't sort by id here */}
+            <th style={{ textAlign:'right' }}>ID</th>
           </tr>
         </thead>
         <tbody>
           {sorted.map(row => (
-            <tr key={row.campaign_id}>
+            <tr key={row.campaign_id} className={selectedCampaign === row.campaign_id ? 'selected-row' : ''}>
               <td>{row.campaign_name}</td>
               <td>{row.campaign_type}</td>
               <td style={{ textAlign:'right' }}>{formatNumber(row.impressions)}</td>

@@ -6,18 +6,16 @@ import SpendChart from './components/SpendChart'
 import FilterBar from './components/FilterBar'
 import ROASChart from './components/ROASChart'
 
-
 export default function App() {
-  // today in YYYY-MM-DD format (will be used as default "To" date)
   const today = new Date().toISOString().split('T')[0]
-
   const [campaigns, setCampaigns] = useState([])
   const [metrics, setMetrics] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-
-  // DEFAULT: dateTo is today so the UI shows "To" = today on first load
   const [filters, setFilters] = useState({ dateTo: today })
+
+  // selected campaign id (null = none)
+  const [selectedCampaign, setSelectedCampaign] = useState(null)
 
   useEffect(() => {
     async function load() {
@@ -41,18 +39,19 @@ export default function App() {
     load()
   }, [])
 
-  // create lookup map for campaigns
+  // build a lookup for campaign metadata
   const campaignMap = useMemo(() => {
     const m = {}
     campaigns.forEach(c => (m[c.campaign_id] = c))
     return m
   }, [campaigns])
 
+  // unique campaign types for select
   const campaignTypes = useMemo(() => {
     return Array.from(new Set(campaigns.map(c => c.campaign_type))).filter(Boolean)
   }, [campaigns])
 
-  // apply filters to metrics
+  // apply filters to metrics and campaigns
   const filteredMetrics = useMemo(() => {
     return metrics.filter(m => {
       if (filters.dateFrom && m.date < filters.dateFrom) return false
@@ -77,6 +76,16 @@ export default function App() {
     return campaigns.filter(c => setIds.has(c.campaign_id))
   }, [campaigns, filteredMetrics])
 
+  // Toggle selection: click same id again -> deselect
+  const toggleSelectedCampaign = (id) => {
+    setSelectedCampaign(prev => {
+      const next = prev === id ? null : id
+      // sync search filter to show the campaign in the table when selected, clear when deselected
+      setFilters(prevFilters => ({ ...prevFilters, search: next || '' }))
+      return next
+    })
+  }
+
   if (loading) return <div className="container"><p>Loading data…</p></div>
   if (error) return <div className="container"><p>Error: {error}</p></div>
 
@@ -89,14 +98,18 @@ export default function App() {
       <KPIs metrics={filteredMetrics} />
       <SpendChart metrics={filteredMetrics} />
 
-      {/* ROAS chart: clicking a bar will set the search filter to that campaign ID */}
       <ROASChart
         campaigns={campaigns}
         metrics={filteredMetrics}
-        onBarClick={(campaignId) => setFilters(prev => ({ ...prev, search: campaignId }))}
+        selectedCampaign={selectedCampaign}
+        onBarClick={toggleSelectedCampaign}
       />
 
-      <CampaignTable campaigns={filteredCampaigns} metrics={filteredMetrics} />
+      <CampaignTable
+        campaigns={filteredCampaigns}
+        metrics={filteredMetrics}
+        selectedCampaign={selectedCampaign}
+      />
     </div>
   )
 }

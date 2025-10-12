@@ -103,6 +103,18 @@ tbody td { padding:8px 6px; border-bottom:1px solid #f3f4f6; }
   background: #fafafa;
   box-shadow: 0 6px 12px rgba(15,23,42,0.04);
 }
+.selected-row {
+  background: #f0f9ff; 
+  transition: background .12s ease;
+}
+
+.selected-row td {
+  font-weight: 600;
+}
+
+.chart-wrap { margin-bottom: 32px; }
+.table-wrap { margin-top: 28px; }
+
 
 
 
