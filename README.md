@@ -72,9 +72,10 @@ VITE_SUPABASE_ANON_KEY
 
 ### 6. Daten prüfen & importieren
 
-Zur Validierung und zum Import der Daten (z. B. Kampagnendaten):
+Mit cd .. zuruck in die root-ebene und zur Validierung und zum Import der Daten (z. B. Kampagnendaten):
 
 ```bash
+cd .. 
 npm run validate
 node import.js data/campaigns.csv
 ```
