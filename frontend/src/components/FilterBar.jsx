@@ -31,14 +31,16 @@ export default function FilterBar({ filters, setFilters, campaignTypes, defaultD
         </select>
       </div>
 
-      <div style={{ flex: 1 }} />
-
+      {/* Put Search left (before the flexible spacer) */}
       <div className="filter-group search-group">
         <label className="filter-label search-label">Search</label>
         <input className="filter-input search-input" name="search" placeholder="campaign name or id" value={filters.search || ''} onChange={onChange} />
       </div>
 
-      <button className="btn btn-primary" type="button" onClick={reset}>Reset</button>
+      {/* spacer pushes the Reset to the far right */}
+      <div style={{ flex: 1 }} />
+
+      <button className="btn btn-primary reset-button" type="button" onClick={reset}>Reset</button>
     </div>
   )
 }

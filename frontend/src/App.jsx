@@ -81,7 +81,6 @@ export default function App() {
   return (
     <div className="container">
       <h1>Touchpoint — Campaign Dashboard</h1>
-      <div className="subtitle">Data up to: <strong>{filters.dateTo || '—'}</strong></div>
 
       <FilterBar filters={filters} setFilters={setFilters} campaignTypes={campaignTypes} defaultDate={today} />
 
