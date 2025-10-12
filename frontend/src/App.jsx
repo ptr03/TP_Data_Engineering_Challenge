@@ -14,14 +14,19 @@ export default function App() {
   const [error, setError] = useState(null)
   const [filters, setFilters] = useState({ dateTo: today })
 
-  // selected campaign id (null = none)
   const [selectedCampaign, setSelectedCampaign] = useState(null)
 
-  // seed used to force-remount some visuals on reset (kept, harmless)
+  // Seed used to force remounts (and reset internal state) on reset.
   const [resetSeed, setResetSeed] = useState(0)
 
   const isISO = (v) => /^\d{4}-\d{2}-\d{2}$/.test(v || '')
 
+  /**
+   * Initial load from Supabase:
+   * - fetches campaigns and metrics
+   * - guards errors
+   * - sets loading state appropriately
+   */
   useEffect(() => {
     async function load() {
       setLoading(true)
@@ -44,34 +49,46 @@ export default function App() {
     load()
   }, [])
 
+  // Fast lookup by campaign_id to avoid repeated .find calls elsewhere.
   const campaignMap = useMemo(() => {
     const m = {}
     campaigns.forEach(c => (m[c.campaign_id] = c))
     return m
   }, [campaigns])
 
+  // Unique list of campaign types for the filter dropdown.
   const campaignTypes = useMemo(() => {
     return Array.from(new Set(campaigns.map(c => c.campaign_type))).filter(Boolean)
   }, [campaigns])
 
-  // --- compute CSV min/max dates (YYYY-MM-DD) ---
+  /**
+   * Compute min/max dates from the metrics (for date inputs and defaults).
+   * Works off distinct sorted date strings (YYYY-MM-DD).
+   */
   const [minDate, maxDate] = useMemo(() => {
     if (!metrics.length) return ['', '']
     const dates = [...new Set(metrics.map(m => m.date))].sort()
     return [dates[0], dates[dates.length - 1]]
   }, [metrics])
 
-  // --- One-time align dateTo to CSV maxDate (no constant rewriting) ---
+  /**
+   * If new data extends/changes the max date, ensure filters.dateTo
+   * is valid and not beyond the available range.
+   */
   useEffect(() => {
     if (!maxDate) return
     setFilters(prev => {
       const needs = !isISO(prev.dateTo) || prev.dateTo > maxDate
       return needs ? { ...prev, dateTo: maxDate } : prev
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maxDate])
 
-  // apply filters to metrics (date/type/search)
+  /**
+   * Apply all filters to the raw metrics:
+   * - date range (inclusive)
+   * - campaign type
+   * - free-text search on campaign id or name
+   */
   const filteredMetrics = useMemo(() => {
     const from = isISO(filters.dateFrom) ? filters.dateFrom : null
     const to   = isISO(filters.dateTo)   ? filters.dateTo   : null
@@ -94,22 +111,29 @@ export default function App() {
     })
   }, [metrics, filters, campaignMap])
 
+  // Limit campaigns list to those present in the filtered metrics.
   const filteredCampaigns = useMemo(() => {
     const setIds = new Set(filteredMetrics.map(m => m.campaign_id))
     return campaigns.filter(c => setIds.has(c.campaign_id))
   }, [campaigns, filteredMetrics])
 
-  // Base metrics for KPIs & SpendChart (optionally narrowed by selectedCampaign)
+  // If a campaign is selected, narrow charts/KPIs to just that campaign.
   const metricsBase = useMemo(() => {
     if (!selectedCampaign) return filteredMetrics
     return filteredMetrics.filter(m => m.campaign_id === selectedCampaign)
   }, [filteredMetrics, selectedCampaign])
 
+  // Toggle behavior: clicking the same campaign again clears the selection.
   const toggleSelectedCampaign = (id) => {
     setSelectedCampaign(prev => (prev === id ? null : id))
   }
 
-  // Reset: clear everything to initial state
+  /**
+   * Global reset:
+   * - reset filters to end of available range
+   * - clear selected campaign
+   * - bump resetSeed to force child components to remount if they keep local state
+   */
   const handleReset = () => {
     setFilters({ dateTo: maxDate || today })
     setSelectedCampaign(null)
@@ -133,10 +157,9 @@ export default function App() {
         onReset={handleReset}
       />
 
-      {/* KPIs reflect filters (and selected campaign, if any) */}
+      {/* Keys include resetSeed to clear any internal memo/local state after reset */}
       <KPIs key={`kpis-${resetSeed}`} metrics={metricsBase} />
 
-      {/* SpendChart reflects filters (and selected campaign) */}
       <SpendChart key={`spend-${resetSeed}`} metrics={metricsBase} />
 
       <ROASChart

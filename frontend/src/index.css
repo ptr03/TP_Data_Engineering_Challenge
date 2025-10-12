@@ -1,8 +1,12 @@
+/* ---- Base/theme ---- */
 :root {
+  /* App typography & base colors */
   font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   color: #111827;
   background: #f9fafb;
 }
+
+/* ---- Layout container ---- */
 .container {
   max-width: 1100px;
   margin: 28px auto;
@@ -10,26 +14,37 @@
   background: white;
   border-radius: 8px;
   box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+  position: relative; /* anchor for absolutely positioned reset button */
 }
+
 h1 { margin-bottom: 16px; font-size: 20px; }
+
+/* ---- KPI cards ---- */
 .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 18px; }
 .kpi-card { padding: 12px; background:#F3F4F6; border-radius:8px; }
 .kpi-title { font-size:12px; color:#6b7280; }
 .kpi-value { font-size:18px; font-weight:700; margin-top:6px; }
-.table-wrap { margin-top: 20px; }
+
+/* ---- Tables ---- */
+.table-wrap { margin-top: 28px; }  /* spacing above tables */
 table { width:100%; border-collapse: collapse; }
 thead th { text-align:left; font-size:12px; color:#6b7280; padding:8px 6px; border-bottom:1px solid #e5e7eb; }
 tbody td { padding:8px 6px; border-bottom:1px solid #f3f4f6; }
-.chart-wrap { margin: 18px 0; }
-.search-label { margin-right: 28px; white-space: nowrap; } 
 
-/* ===== Filter bar - horizontal layout ===== */
+/* Selected table row highlight (synced with component state) */
+.selected-row { background: #f0f9ff; transition: background .12s ease; }
+.selected-row td { font-weight: 600; }
+
+/* ---- Charts ---- */
+.chart-wrap { margin: 18px 0 32px; } /* vertical rhythm around charts */
+
+/* ---- Filter bar (horizontal layout) ---- */
 .filter-bar {
   display: flex;
   gap: 16px;
   align-items: center;
   margin-bottom: 18px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* wrap on smaller widths */
 }
 
 .filter-group {
@@ -42,12 +57,13 @@ tbody td { padding:8px 6px; border-bottom:1px solid #f3f4f6; }
 
 .filter-label {
   font-size: 13px;
-  color: var(--muted, #6b7280);
+  color: var(--muted, #6b7280); /* allows theme override via --muted */
   white-space: nowrap;
   min-width: 60px;
   text-align: left;
 }
 
+/* Inputs/selects share consistent visual weight */
 .filter-input,
 .filter-select {
   padding: 8px 10px;
@@ -59,29 +75,16 @@ tbody td { padding:8px 6px; border-bottom:1px solid #f3f4f6; }
   box-shadow: none;
 }
 
-.search-group {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+/* Search cluster */
+.search-group { display: flex; align-items: center; gap: 12px; }
+.search-label { margin-right: 12px; white-space: nowrap; }
+.search-input { min-width: 300px; }
 
-.search-label {
-  margin-right: 12px;
-  white-space: nowrap;
-}
-
-.search-input {
-  min-width: 300px;
-}
-
-.container {
-  position: relative; 
-}
-
+/* ---- Reset button (floating in container corner) ---- */
 .reset-button {
   position: absolute;
-  top: 20px;          
-  right: 20px;         
+  top: 20px;
+  right: 20px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -95,7 +98,7 @@ tbody td { padding:8px 6px; border-bottom:1px solid #f3f4f6; }
   min-width: 130px;
   box-shadow: none;
   cursor: pointer;
-  z-index: 30;        
+  z-index: 30; /* sits above chart/table content */
 }
 
 .reset-button:hover {
@@ -103,29 +106,18 @@ tbody td { padding:8px 6px; border-bottom:1px solid #f3f4f6; }
   background: #fafafa;
   box-shadow: 0 6px 12px rgba(15,23,42,0.04);
 }
-.selected-row {
-  background: #f0f9ff; 
-  transition: background .12s ease;
-}
 
-.selected-row td {
-  font-weight: 600;
-}
-
-.chart-wrap { margin-bottom: 32px; }
-.table-wrap { margin-top: 28px; }
-
-
-
-
-
+/* ---- Responsive tweaks ---- */
 @media (max-width: 900px) {
+  /* Stack filter controls vertically and make inputs full-width */
   .filter-bar { gap: 10px; }
   .filter-group { flex-direction: column; align-items: stretch; margin-right: 0; }
   .filter-label { min-width: 0; margin-bottom: 6px; }
   .search-group { margin-left: 0; width: 100%; justify-content: flex-start; }
   .search-input { min-width: 100%; }
   .filter-input, .filter-select { min-width: 100%; }
+
+  /* Reset button becomes inline, full-width CTA for mobile ergonomics */
   .reset-button {
     position: static;
     width: 100%;
@@ -134,6 +126,3 @@ tbody td { padding:8px 6px; border-bottom:1px solid #f3f4f6; }
     align-self: stretch;
   }
 }
-
-
-
