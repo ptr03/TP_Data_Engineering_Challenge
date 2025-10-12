@@ -57,7 +57,11 @@ SUPABASE_SERVICE_KEY
 ### 5. Frontend-Umgebung konfigurieren
 
 Wechsle in den `frontend`-Ordner und lege dort eine `.env.local`-Datei an.
-Kopiere die Variablen aus `env.example` und setze die Werte für:
+```bash
+cd frontend
+cp env.local.example .env.local
+```
+Setze die Werte für:
 
 ```
 VITE_SUPABASE_URL
