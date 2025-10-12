@@ -15,37 +15,91 @@ Dieses Repository enthält die vollständige Abgabe für die Touchpoint Case Stu
 - `env.example` — Vorlage für Umgebungsvariablen (Server & Frontend)
 - `Ergebnisse/` — Screenshots / CSV-Exports der SQL-Checks
 
-## Quickstart
+Quickstart
 
-1. Node (LTS) installieren.
-2. Repo klonen und root öffnen.
-3. Root-Dependencies:
-   npm install
+### 1. Node.js installieren
 
-4. Root `.env` anlegen (server-side, nur für Import):
-   cp env.example .env
+Installiere die aktuelle **LTS-Version** von Node.js, falls noch nicht vorhanden.
 
-   # Fülle SUPABASE_URL & SUPABASE_SERVICE_KEY in .env
+---
 
-5. Frontend-Env (lokal, im Ordner frontend):
+### 2. Repository klonen
 
-   # Kopiere die Frontend-Variablen aus env.example in frontend/.env.local
+Klon das Projekt und öffne anschließend den Projektordner im Root-Verzeichnis.
 
-   # Setze VITE_SUPABASE_URL und VITE_SUPABASE_ANON_KEY
+---
 
-6. Daten prüfen & importieren (root):
-   npm run validate
-   node import.js data/campaigns.csv
+### 3. Root-Dependencies installieren
 
-7. Frontend starten:
-   cd frontend
-   npm install
-   npm run dev
+```bash
+npm install
+```
 
-   # Öffne http://localhost:5173
+---
 
-8. (Optional) Production build:
-   npm run build # im frontend-Ordner
+### 4. Umgebungsvariablen (Server-Seite) einrichten
+
+Erstelle im Root-Verzeichnis eine `.env`-Datei auf Basis des Beispiels:
+
+```bash
+cp env.example .env
+```
+
+Fülle anschließend in der `.env` die Werte für:
+
+```
+SUPABASE_URL
+SUPABASE_SERVICE_KEY
+```
+
+---
+
+### 5. Frontend-Umgebung konfigurieren
+
+Wechsle in den `frontend`-Ordner und lege dort eine `.env.local`-Datei an.
+Kopiere die Variablen aus `env.example` und setze die Werte für:
+
+```
+VITE_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY
+```
+
+---
+
+### 6. Daten prüfen & importieren
+
+Zur Validierung und zum Import der Daten (z. B. Kampagnendaten):
+
+```bash
+npm run validate
+node import.js data/campaigns.csv
+```
+
+---
+
+### 7. Frontend starten
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Danach kannst du das Frontend unter
+👉 **[http://localhost:5173](http://localhost:5173)**
+im Browser öffnen.
+
+---
+
+### 8. (Optional) Production Build erstellen
+
+Falls du das Projekt für den Live-Betrieb bauen möchtest:
+
+```bash
+npm run build
+```
+
+(diesen Befehl im `frontend`-Ordner ausführen)
 
 ## Design-Entscheidungen
 
