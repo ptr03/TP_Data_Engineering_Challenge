@@ -30,7 +30,7 @@ Klon das Projekt und öffne anschließend den Projektordner im Root-Verzeichnis.
 ---
 
 ### 3. Root-Dependencies installieren
-Terminal:
+Terminal(git bash):
 ```bash
 npm install
 ```
