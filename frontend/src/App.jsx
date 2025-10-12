@@ -14,8 +14,11 @@ export default function App() {
   const [error, setError] = useState(null)
   const [filters, setFilters] = useState({ dateTo: today })
 
-  // selected campaign id (null = none)
   const [selectedCampaign, setSelectedCampaign] = useState(null)
+
+  const [resetSeed, setResetSeed] = useState(0)
+
+  const [brushWindow, setBrushWindow] = useState(null)
 
   useEffect(() => {
     async function load() {
@@ -49,29 +52,23 @@ export default function App() {
     return Array.from(new Set(campaigns.map(c => c.campaign_type))).filter(Boolean)
   }, [campaigns])
 
-  // --- NEW: compute CSV min/max dates (YYYY-MM-DD) ---
   const [minDate, maxDate] = useMemo(() => {
     if (!metrics.length) return ['', '']
     const dates = [...new Set(metrics.map(m => m.date))].sort()
     return [dates[0], dates[dates.length - 1]]
   }, [metrics])
 
-  // --- NEW: ensure dateTo defaults to last CSV date (and stays within range) ---
   useEffect(() => {
     if (!maxDate) return
     setFilters(prev => {
       const next = { ...prev }
-      // if dateTo not set or outside CSV range, snap to maxDate
       if (!next.dateTo || next.dateTo > maxDate) next.dateTo = maxDate
-      // if dateFrom set and below min, snap up
       if (next.dateFrom && next.dateFrom < minDate) next.dateFrom = minDate
-      // if dateFrom > dateTo, align
       if (next.dateFrom && next.dateTo && next.dateFrom > next.dateTo) next.dateFrom = next.dateTo
       return next
     })
   }, [minDate, maxDate])
 
-  // apply filters to metrics (date/type/search)
   const filteredMetrics = useMemo(() => {
     return metrics.filter(m => {
       if (filters.dateFrom && m.date < filters.dateFrom) return false
@@ -96,23 +93,25 @@ export default function App() {
     return campaigns.filter(c => setIds.has(c.campaign_id))
   }, [campaigns, filteredMetrics])
 
-  // metrics used for KPIs/SpendChart: if a campaign selected, show metrics just for that campaign in KPIs/SpendChart
-  const metricsForKPIs = useMemo(() => {
+  const metricsBase = useMemo(() => {
     if (!selectedCampaign) return filteredMetrics
     return filteredMetrics.filter(m => m.campaign_id === selectedCampaign)
   }, [filteredMetrics, selectedCampaign])
 
-  // Toggle selection: select/deselect a campaign.
-  // IMPORTANT: do NOT change filters/search here — the table stays showing ALL filteredCampaigns.
+  const metricsForKPIs = useMemo(() => {
+    if (!brushWindow?.from || !brushWindow?.to) return metricsBase
+    return metricsBase.filter(m => m.date >= brushWindow.from && m.date <= brushWindow.to)
+  }, [metricsBase, brushWindow])
+
   const toggleSelectedCampaign = (id) => {
     setSelectedCampaign(prev => (prev === id ? null : id))
   }
 
-  // Reset: clear filters and selected campaign
   const handleReset = () => {
-    // use last CSV date rather than 'today' so it stays within range
     setFilters({ dateTo: maxDate || today })
     setSelectedCampaign(null)
+    setBrushWindow(null)               
+    setResetSeed(s => s + 1)         
   }
 
   if (loading) return <div className="container"><p>Loading data…</p></div>
@@ -126,15 +125,22 @@ export default function App() {
         filters={filters}
         setFilters={setFilters}
         campaignTypes={campaignTypes}
-        defaultDate={maxDate || today}   
-        minDate={minDate}                
-        maxDate={maxDate}                
+        defaultDate={maxDate || today}
+        minDate={minDate}
+        maxDate={maxDate}
+        onReset={handleReset}
       />
 
-      <KPIs metrics={metricsForKPIs} />
-      <SpendChart metrics={metricsForKPIs} />
+      <KPIs key={`kpis-${resetSeed}`} metrics={metricsForKPIs} />
+
+      <SpendChart
+        key={`spend-${resetSeed}-${maxDate || today}`}
+        metrics={metricsBase}
+        onDateWindowChange={setBrushWindow}
+      />
 
       <ROASChart
+        key={`roas-${resetSeed}`}
         campaigns={campaigns}
         metrics={filteredMetrics}
         selectedCampaign={selectedCampaign}
@@ -142,6 +148,7 @@ export default function App() {
       />
 
       <CampaignTable
+        key={`table-${resetSeed}`}
         campaigns={filteredCampaigns}
         metrics={filteredMetrics}
         selectedCampaign={selectedCampaign}

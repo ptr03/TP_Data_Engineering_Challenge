@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import {
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip,
   CartesianGrid, ReferenceLine, Brush
@@ -22,7 +22,7 @@ function fillDaily(data) {
   return res;
 }
 
-export default function SpendChart({ metrics }) {
+export default function SpendChart({ metrics, onDateWindowChange = () => {} }) {
   // --- Aggregation + Tageslücken füllen ---
   const { data, avg } = useMemo(() => {
     const byDate = {};
@@ -47,15 +47,49 @@ export default function SpendChart({ metrics }) {
     endIndex: Math.max(0, (data?.length || 1) - 1),
   });
 
+  // Wenn sich die Datenlänge ändert (z. B. Filter/Selektion), Range sicher anpassen
+  useEffect(() => {
+    const n = data?.length || 0;
+    if (!n) {
+      setRange({ startIndex: 0, endIndex: 0 });
+      return;
+    }
+    setRange(prev => {
+      const startIndex = Math.min(Math.max(0, prev.startIndex), n - 1);
+      const endIndex = Math.min(Math.max(startIndex, prev.endIndex), n - 1);
+      // Wenn sich effektiv nichts ändert, keinen State-Update triggern
+      if (startIndex === prev.startIndex && endIndex === prev.endIndex) return prev;
+      return { startIndex, endIndex };
+    });
+  }, [data]);
+
   const view = useMemo(() => {
     if (!data?.length) return [];
     const { startIndex, endIndex } = range;
+    // slice toleriert end < start (liefert dann []), wir clampen bereits oben
     return data.slice(startIndex, endIndex + 1);
   }, [data, range]);
 
   // --- Formatierer ---
   const yFmt = (v) => fmtEUR.format(v);
   const xTickFmt = (v) => fmtDate(v);
+
+  // Nur senden, wenn sich das Fenster wirklich geändert hat
+  const lastWindowRef = useRef({ from: null, to: null });
+  useEffect(() => {
+    const n = data?.length || 0;
+    if (!n) return;
+
+    const from = data[Math.max(0, range.startIndex)]?.date;
+    const to = data[Math.min(n - 1, range.endIndex)]?.date;
+    if (!from || !to) return;
+
+    const last = lastWindowRef.current;
+    if (last.from !== from || last.to !== to) {
+      lastWindowRef.current = { from, to };
+      onDateWindowChange({ from, to });
+    }
+  }, [data, range, onDateWindowChange]);
 
   return (
     <div className="chart-wrap">
@@ -119,7 +153,17 @@ export default function SpendChart({ metrics }) {
                 travellerWidth={10}
                 startIndex={range.startIndex}
                 endIndex={range.endIndex}
-                onChange={(r) => r && setRange({ startIndex: r.startIndex, endIndex: r.endIndex })}
+                onChange={(r) => {
+                  if (!r) return;
+                  // defensiv clampen
+                  const n = data?.length || 0;
+                  const s = Math.min(Math.max(0, r.startIndex ?? 0), Math.max(0, n - 1));
+                  const e = Math.min(Math.max(0, r.endIndex ?? s), Math.max(0, n - 1));
+                  setRange(prev => {
+                    if (prev.startIndex === s && prev.endIndex === e) return prev;
+                    return { startIndex: s, endIndex: e };
+                  });
+                }}
               />
             </LineChart>
           </ResponsiveContainer>
